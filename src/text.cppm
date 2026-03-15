@@ -15,9 +15,9 @@ import thread_pool;
 
 // 用于处理文件的字符串
 class FileText {
-    int id_;
-    std::u32string context_;
-    Minhash minhash_;
+    int id_{};
+    std::u32string context_{};
+    Minhash minhash_{};
 
     static std::string traditional_to_simplified(const std::string& text) {
         opencc_t h = opencc_open("t2s.json");
@@ -230,4 +230,9 @@ export std::vector<DedupeFilesPath> analyse_text(const std::string& path) {
     }
     endl(std::cout);
     return lsh.dsu();
+}
+
+export void classes_text(const std::string &path, const std::string &class_path) {
+    const auto text_class_info = analyse_text(path);
+    class_to(text_class_info, class_path);
 }
