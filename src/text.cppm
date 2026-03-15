@@ -180,6 +180,7 @@ class FileText {
     }
 
 public:
+    FileText() = default;
     explicit FileText(const std::string &path, const int id) {
         id_ = id;
         context_ = normalization_text(load_text_file(path));
@@ -204,18 +205,28 @@ public:
 
 // 分析path下的所有text文件
 export std::vector<DedupeFilesPath> analyse_text(const std::string& path) {
+    auto analyse_thread_pool = ThreadPool();
     const auto files = search_files(path, FileType::text);
     LSH lsh(files);
+    using to_minhash_type = decltype(std::declval<FileText>().to_minhash());
+    std::vector<std::future<to_minhash_type>> futures;
+
+    futures.reserve(files.size());
+
+    for (int i = 0; i < files.size(); ++i) {
+        auto lambda = [&files, i] {
+            FileText file_text(files[i], i);
+            return file_text.to_minhash();
+        };
+        futures.push_back(analyse_thread_pool.submit(lambda));
+    }
 
     // 加载文件夹下所有的text文件
     std::println("analyse -> {}", path);
     for (int i = 0;i < files.size(); ++i) {
         std::print("\t-> [{:{}}/{}]\r", i + 1, std::to_string(i).size(), files.size());
         std::cout.flush();
-
-        // 处理当前文件
-        FileText file_text(files[i], i);
-        lsh.insert(file_text.to_minhash());
+        lsh.insert(futures[i].get());
     }
     endl(std::cout);
     return lsh.dsu();
