@@ -1,12 +1,9 @@
-#include <iostream>
+import std;
+import text;
 
 int main() {
-    auto lang = "C++";
-    std::cout << "Hello and welcome to " << lang << "!\n";
 
-    for (int i = 1; i <= 5; i++) {
-        std::cout << "i = " << i << std::endl;
-    }
+    analyse_text("/home/hexne/Desktop/小说");
 
     return 0;
 }

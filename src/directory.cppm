@@ -13,7 +13,7 @@ export enum class FileType {
 };
 
 
-export std::vector<std::string> find_files(const std::string& path, const FileType& file_type) {
+export std::vector<std::string> search_files(const std::string& path, const FileType& file_type) {
     std::vector<std::string> extent;
 
     switch (file_type) {
