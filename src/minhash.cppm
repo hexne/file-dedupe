@@ -39,7 +39,7 @@ consteval std::tuple<size_t, size_t> band_format(float threshold, int minhash_si
 }
 
 constexpr size_t minhash_size = 128;
-export constexpr float jaccard_threshold = 0.1f;
+export constexpr float jaccard_threshold = 0.7f;
 constexpr std::tuple<size_t, size_t> band_format_tuple = band_format(jaccard_threshold, minhash_size);
 export constexpr size_t band_count = std::get<0>(band_format_tuple);
 export constexpr size_t band_size = std::get<1>(band_format_tuple);
