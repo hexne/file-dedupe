@@ -96,8 +96,8 @@ public:
                 std::string rep;
                 std::vector<std::string> other_files;
                 other_files.reserve(indexs.size());
+                std::size_t size = std::numeric_limits<std::size_t>::min();
                 for (const auto &index : indexs) {
-                    std::size_t size = std::numeric_limits<std::size_t>::min();
                     if (auto cur_file_size = std::filesystem::file_size(files_path_[index]); cur_file_size >= size) {
                         size = cur_file_size;
                         rep = files_path_[index];
