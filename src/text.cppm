@@ -208,7 +208,7 @@ export std::vector<DedupeFilesPath> analyse_text(const std::string& path) {
     LSH lsh(files);
 
     // 加载文件夹下所有的text文件
-    std::println("-> {}", path);
+    std::println("analyse -> {}", path);
     for (int i = 0;i < files.size(); ++i) {
         std::print("\t-> [{:{}}/{}]\r", i + 1, std::to_string(i).size(), files.size());
         std::cout.flush();
@@ -218,6 +218,5 @@ export std::vector<DedupeFilesPath> analyse_text(const std::string& path) {
         lsh.insert(file_text.to_minhash());
     }
     endl(std::cout);
-
     return lsh.dsu();
 }

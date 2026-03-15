@@ -65,7 +65,6 @@ public:
         minhash_.merge(minhash);
     }
 
-
     // 分类
     std::vector<DedupeFilesPath> dsu() {
         auto query = this->query();
@@ -106,6 +105,7 @@ public:
                     other_files.push_back(files_path_[index]);
                 }
                 other_files.erase(std::ranges::find(other_files, rep));
+                ret.push_back({.rep = rep, .other_files = other_files});
             }
         }
         return ret;

@@ -57,12 +57,12 @@ export void class_to(const std::vector<DedupeFilesPath> &dedupe_files, const std
         std::filesystem::copy_file(file, dst_dir / file.filename(), std::filesystem::copy_options::overwrite_existing);
     };
 
-
-    std::println("copy -> {} begin", path);
+    std::println("copy -> {}", path);
     create_dir(path);
     for (int i = 0; i < dedupe_files.size(); ++i) {
         const auto &dedupe_file = dedupe_files[i];
-        std::println("\t copy -> {:{}}/{}\r", i, std::to_string(dedupe_files.size()).size(), dedupe_files.size());
+        std::print("\t-> [{:{}}/{}]\r", i + 1, std::to_string(dedupe_files.size()).size(), dedupe_files.size());
+        std::cout.flush();
         // 仅有单个文件
         if (dedupe_file.other_files.empty()) {
             copy_to(dedupe_file.rep, path);
@@ -80,5 +80,5 @@ export void class_to(const std::vector<DedupeFilesPath> &dedupe_files, const std
             }
         }
     }
-    std::println("copy -> {} end", path);
+    std::println("");
 }
